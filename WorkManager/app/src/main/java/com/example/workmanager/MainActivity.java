@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button statrtWorkmanager_btn;
@@ -50,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.start_work_btn:
-        WorkManager.getInstance(getApplicationContext()).
-                        beginWith((OneTimeWorkRequest) workRequest).
-                        then((OneTimeWorkRequest)workRequest_1).
-                        then((OneTimeWorkRequest)workRequest_2).
-                        then((OneTimeWorkRequest) workRequest_3).enqueue();
+/**
+ * In this Execution workRequest and workRequest_1 will run in parallel.
+ * Then workRequest_2 and workRequest_3 will Execute after that.
+ */
+                WorkManager.getInstance(getApplicationContext()).beginWith(Arrays.asList((OneTimeWorkRequest)workRequest,(OneTimeWorkRequest)workRequest_1)).then((OneTimeWorkRequest) workRequest_2).then((OneTimeWorkRequest) workRequest_3).enqueue();
                 break;
             case R.id.stop_work_btn:
               workManager.cancelAllWorkByTag("WorkManager_2"); // use Tag used for the corresponding WorkRequest.
